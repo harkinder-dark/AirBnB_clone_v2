@@ -107,3 +107,23 @@ class test_fileStorage(unittest.TestCase):
         from models.engine.file_storage import FileStorage
         print(type(storage))
         self.assertEqual(type(storage), FileStorage)
+
+    def test_all_classes(self):
+        """test for deletes class"""
+        from models.engine.file_storage import FileStorage
+        fs = FileStorage()
+        #first entry
+        new_state = State()
+        new_state.name = "California"
+        fs.new(new_state)
+        fs.save()
+        #second entry
+        another_state = State()
+        another_state.name = "Nevada"
+        fs.new(another_state)
+        fs.save()
+        #test
+        len1 = len(fs.all())
+        fs.delete(new_state)
+        len2 = len(fs.all())
+        self.assertNotEqual(len1, len2)
