@@ -124,8 +124,8 @@ class HBNBCommand(cmd.Cmd):
             return
         param = args.split(" ")
         kwarg = {}
-        for i in range(1, len(args)):
-            key, val = tuple(param[i]).split('=')
+        for i in range(1, len(param)):
+            key, val = tuple(param[i].split('='))
             if val[0] == '"':
                 val.strip('"').replace('_', ' ')
             else:
@@ -134,10 +134,14 @@ class HBNBCommand(cmd.Cmd):
                 except Exception:
                     continue
             kwarg[key] = val
-        new_instance = HBNBCommand.classes[args](**kwarg)
-        storage.save()
+        new_instance = None
+        if kwarg == {}:
+            new_instance = HBNBCommand.classes[param[0]]()
+        else:
+            new_instance = HBNBCommand.classes[param[0]](**kwarg)
+            storage.new(new_instance)
         print(new_instance.id)
-        storage.save()
+        new_instance.save()
 
     def help_create(self):
         """ Help information for the create method """
