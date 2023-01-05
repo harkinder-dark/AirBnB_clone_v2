@@ -4,9 +4,8 @@
 
 from sqlalchemy import create_engine
 from os import getenv
-from models import Base
 from models.amenity import Amenity
-from models.base_model import BaseModel
+from models.base_model import BaseModel, Base
 from models.city import City
 from models.place import Place
 from models.review import Review
