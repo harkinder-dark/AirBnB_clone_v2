@@ -113,7 +113,6 @@ class HBNBCommand(cmd.Cmd):
         """ Overrides the emptyline method of CMD """
         pass
 
-#update the do_create function
     def do_create(self, args):
         """ Create an object of any class"""
         if not args:
@@ -128,7 +127,7 @@ class HBNBCommand(cmd.Cmd):
             key, val = i.split('=')
             if val[0] == '"':
                 val = val.strip('"')
-                val = value.replace("\\", "")
+                val = val.replace("\\", "")
                 val = val.replace('_', ' ')
             else:
                 try:
