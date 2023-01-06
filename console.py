@@ -125,9 +125,11 @@ class HBNBCommand(cmd.Cmd):
         param = args.split(" ")
         kwarg = {}
         for i in param[1:]:
-            key, val = tuple(i.split('='))
+            key, val = i.split('=')
             if val[0] == '"':
-                val.strip('"').replace('_', ' ')
+                val = val.strip('"')
+                val = value.replace("\\", "")
+                val = val.replace('_', ' ')
             else:
                 try:
                     val = eval(val)
