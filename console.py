@@ -124,15 +124,20 @@ class HBNBCommand(cmd.Cmd):
         param = args.split(" ")
         new_instance = HBNBCommand.classes[param[0]]()
         for i in param[1:]:
-            key, val = i.split('=')
+            key, val = i.split("=")
             flag = 0
             if val[0] == '"':
                 val = val.strip('"')
                 val = val.replace("\\", "")
-                val = val.replace('_', ' ')
+                val = val.replace("_", " ")
+            elif "." in val:
+                try:
+                    val = float(val)
+                except Exception:
+                    flag = 1
             else:
                 try:
-                    val = eval(val)
+                    val = int(val)
                 except Exception:
                     flag = 1
             if (not flag):
