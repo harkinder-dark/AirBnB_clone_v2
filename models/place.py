@@ -4,8 +4,10 @@ from models.base_model import BaseModel, Base
 from sqlalchemy import Column, String, ForeignKey
 from sqlalchemy import Integer, Float, Table
 from os import environ
+import models
 
 
+storage_engine = environ.get("HBNB_TYPE_STORAGE")
 if storage_engine == "db":
     place_amenity = Table("place_amenity", Base.metadata,
                           Column('place_id', String(60),
@@ -16,7 +18,6 @@ if storage_engine == "db":
                                  ForeignKey("amenities.id"),
                                  primary_key=True,
                                  nullable=False))
-storage_engine = environ.get("HBNB_TYPE_STORAGE")
 
 
 class Place(BaseModel, Base):
@@ -33,8 +34,9 @@ class Place(BaseModel, Base):
         price_by_night = Column(Integer, default=0)
         latitude = Column(Float)
         longitude = Column(Float)
-        reviews = relationship("Review", backref="place", cascade="delete")
-        amenities = relationship("Amenity", secondary="place_amenity",
+        reviews = relationship("Review", back_populates="place", cascade="delete")
+        amenities = relationship("Amenity", secondary=place_amenity,
+                                 back_populates="place_amenities",
                                  viewonly=False)
         amenity_ids = []
     else:
@@ -50,15 +52,14 @@ class Place(BaseModel, Base):
         longitude = 0.0
         amenity_ids = []
 
-    if getenv("HBNB_TYPE_STORAGE", None) != "db":
-        @property
-        def reviews(self):
-            """Get a list of all linked Reviews."""
-            review_list = []
-            for review in list(models.storage.all(Review).values()):
-                if review.place_id == self.id:
-                    review_list.append(review)
-            return review_list
+    @property
+    def reviews(self):
+        """Get a list of all linked Reviews."""
+        review_list = []
+        for review in list(models.storage.all(Review).values()):
+            if review.place_id == self.id:
+                review_list.append(review)
+        return review_list
     
     @property
     def amenities(self):
