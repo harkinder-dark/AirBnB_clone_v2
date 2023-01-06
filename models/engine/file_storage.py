@@ -25,7 +25,6 @@ class FileStorage:
             if key.split(".")[0] == cls.__name__:
                 dict_cls.update({key: self.__objects[key]})
         return dict_cls
-        
 
     def new(self, obj):
         """Adds new object to storage dictionary"""
