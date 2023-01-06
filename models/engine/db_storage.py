@@ -14,6 +14,12 @@ from models.user import User
 from sqlalchemy.orm import scoped_session
 
 
+HBNB_MYSQL_USER = getenv('HBNB_MYSQL_USER')
+HBNB_MYSQL_PWD = getenv('HBNB_MYSQL_PWD')
+HBNB_MYSQL_HOST = getenv('HBNB_MYSQL_HOST')
+HBNB_MYSQL_DB = getenv('HBNB_MYSQL_DB')
+
+
 class DBStorage:
     """database class"""
     __engine = None
@@ -22,31 +28,29 @@ class DBStorage:
     def __init__(self):
         """initialisation function"""
         self.__engine = create_engine("mysql+mysqldb://{}:{}@{}/{}"
-                                      .format(getenv(HBNB_MYSQL_USER),
-                                              getenv(HBNB_MYSQL_PWD),
-                                              getenv(HBNB_MYSQL_HOST),
-                                              getenv(HBNB_MYSQL_DB)),
+                                      .format(HBNB_MYSQL_USER,
+                                              HBNB_MYSQL_PWD,
+                                              HBNB_MYSQL_HOST,
+                                              HBNB_MYSQL_DB),
                                       pool_pre_ping=True)
         if HBNB_ENV == "test":
             Base.metadata.drop_all(self.__engine)
 
     def all(self, cls=None):
         """all methods"""
-        cls_dict = {}
-        if cls == None:
-            objs = self.__session.query(User).all()
-            objs.extend(self.__session.query(State).all())
-               .extend(self.__session.query(City).all())
-               .extend(self.__session.query(Amenity).all())
-               .extend(self.__session.query(Place).all())
-               .extend(self.__session.query(Review).all())
-            for obj in objs:
-                key = "{}.{}".format(type(obj).__name__, obj.id)
-                cls_dict[key] = obj
+        cls_dict = {}   
+        objs = [User, State, City, Amenity, Place, Review]
+        if cls:
+            for obj in self.__session.query(cls).all():
+                key = "{}.{}".format(cls.__name__, obj.id)
+                obj.to_dict()
+                cls_dict.update({key: obj})
         else:
-            obj = self.__session.query(eval(cls)):
-            key = "{}.{}".format(type(obj).__name__, obj.id)
-            cls_dict[key] = obj
+            for obj in objs:
+                for row in self.__session.query(obj).all():
+                    key = "{}.{}".format(obj.__name__, row.id)
+                    row.to_dict()
+                    cls_dict.update({key: obj})
         return cls_dict
 
     def new(self, obj):
@@ -73,4 +77,5 @@ class DBStorage:
 
     def close(self):
         """Close the working SQLAlchemy session."""
-        self.__session.close()
+        self.__session.__class__.close(self.__session)7
+        self.reload()
