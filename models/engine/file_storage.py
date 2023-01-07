@@ -56,8 +56,9 @@ class FileStorage:
             pass
     
     def delete(self, obj=None):
-        """deleting objects"""
-        if obj:
+        """delete methode
+        """
+        if (obj):
             self.__objects.pop("{}.{}".format(type(obj).__name__, obj.id))
     
     def close(self):
