@@ -73,8 +73,8 @@ class HBNBCommand(cmd.Cmd):
                 pline = pline[2].strip()  # pline is now str
                 if pline:
                     # check for *args or **kwargs
-                    if pline[0] is '{' and pline[-1] is'}'\
-                            and type(eval(pline)) is dict:
+                    if pline[0] == '{' and pline[-1] =='}'\
+                            and type(eval(pline)) == dict:
                         _args = pline
                     else:
                         _args = pline.replace(',', '')
@@ -142,8 +142,6 @@ class HBNBCommand(cmd.Cmd):
                     flag = 1
             if (not flag):
                 setattr(new_instance, key, val)
-        else:
-            continue
         new_instance.save()
         print(new_instance.id)
 
