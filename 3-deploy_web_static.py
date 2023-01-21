@@ -34,17 +34,17 @@ def do_deploy(archive_path):
         return False
     try:
         arch = archive_path.split("/")
-        base = arch[1].strip('.tgz')
+        base = arch[-1].strip('.tgz')
         put(archive_path, '/tmp/')
         sudo('mkdir -p /data/web_static/releases/{}'.format(base))
         main = "/data/web_static/releases/{}".format(base)
-        sudo('tar -xzf /tmp/{} -C {}/'.format(arch[1], main))
-        sudo('rm /tmp/{}'.format(arch[1]))
+        sudo('tar -xzf /tmp/{} -C {}/'.format(arch[-1], main))
+        sudo('rm /tmp/{}'.format(arch[-1]))
         sudo('mv {}/web_static/* {}/'.format(main, main))
         sudo('rm -rf /data/web_static/current')
         sudo('ln -s {}/ "/data/web_static/current"'.format(main))
         return True
-    except:
+    except Exception:
         return False
 
 
