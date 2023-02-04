@@ -52,28 +52,20 @@ def python(text="is cool"):
     """display “Python ”, followed by"""
     return "Python {}".format(text.replace('_', ' '))
 
-@app.route("/number/<n>", strict_slashes=False)
+@app.route("/number/<int:n>", strict_slashes=False)
 def number(n):
     """display “n is a number”"""
-    if type(n) == int:
-        return "{} is a number".format(n)
+    return "{} is a number".format(n)
 
-@app.route("/number_template/<n>", strict_slashes=False)
+@app.route("/number_template/<int:n>", strict_slashes=False)
 def number_template(n):
     """H1 tag: “Number: n”"""
-    if type(n) == int:
-        render_template("5-number.html", n=n)
+    render_template("5-number.html", n=n)
 
-
-def odd_even(n):
-    """odd or even"""
-    return ("even" if n % 2 == 0 else "odd")
-
-@app.route("/number_odd_or_even/<n>", strict_slashes=False)
+@app.route("/number_odd_or_even/<int:n>", strict_slashes=False)
 def number_odd_or_even(n):
     """“Number: n is even|odd”"""
-    if type(n) == int:
-        render_template("6-numbr_odd_or_even.html", n=n, res=odd_even(n))
+    render_template("6-numbr_odd_or_even.html", n=n)
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0")
