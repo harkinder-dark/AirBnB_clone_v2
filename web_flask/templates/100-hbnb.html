@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<HTML lang="en">
+    <HEAD>
+        <META charset="utf-8">
+        <TITLE>AirBnB Clone</TITLE>
+        <META name="viewport" content="width=device-width, initial-scale=1">
+        <LINK rel="stylesheet" href="styles/4-common.css">
+        <LINK rel="stylesheet" href="styles/3-footer.css">
+        <LINK rel="stylesheet" href="styles/3-header.css">
+        <LINK rel="stylesheet" href="styles/6-filters.css">
+        <LINK rel="stylesheet" href="styles/8-places.css">
+        <LINK rel="icon" href="./images/icon.png">
+	</HEAD>
+    <BODY>
+        <HEADER>
+            <DIV class="logo"></DIV>
+        </HEADER>
+        <DIV class="container">
+            <SECTION class="filters">
+                <DIV class="locations">
+                    <H3>States</H3>
+                    <H4>&nbsp;</H4>
+                    <UL class="popover">
+						{% for state in states.values()|sort(attribute="name") %}
+                			<LI><STRONG>{{ state.name }}</STRONG>
+                  				<UL>
+                  					{% for city in state.cities|sort(attribute="name") %}
+                    				<LI>{{ city.name }}</LI>
+                  						{% endfor %}
+                  				</UL>
+                			</LI>
+              			{% endfor %}
+                    </UL>
+                </DIV>
+                <DIV class="amenities">
+                    <H3>Amenities</H3>
+                    <H4>&nbsp;</H4>
+                    <UL class="popover">
+                        {% for amenity in amenities.values()|sort(attribute="name") %}
+                  			<LI>{{ amenity.name}}</LI>
+                		{% endfor %}
+                    </UL>
+                </DIV>
+                <BUTTON type="button">Search</BUTTON>
+            </SECTION>
+            <SECTION class="places">
+                <H1>Places</H1>
+                <ARTICLE>
+                    <H2>My home</H2>
+                    <DIV class="price_by_night">&#36;80</DIV>
+                    <DIV class="information">
+                        <DIV class="max_guest">
+                            <DIV class="ilog"></DIV>
+                            2 Guests
+                        </DIV>
+                        <DIV class="number_rooms">
+                            <DIV class="ilog"></DIV>
+                            1 Bedroom
+                        </DIV>
+                        <DIV class="number_bathrooms">
+                            <DIV class="ilog"></DIV>
+                            1 Bathroom
+                        </DIV>
+                    </DIV>
+                    <DIV class="user">
+                        <STRONG>Owner:</STRONG>  John lennon
+                    </DIV>
+                    <DIV class="description">
+                        Microsoft Word est un logiciel de traitement de texte publié par 
+                        Microsoft. La version la plus récente est Word 2021.
+                    </DIV>
+                </ARTICLE>
+                <ARTICLE>
+                    <H2>Tiny house</H2>
+                    <DIV class="price_by_night">&#36;65</DIV>
+                    <DIV class="information">
+                        <DIV class="max_guest">
+                            <DIV class="ilog"></DIV>
+                            4 Guests
+                        </DIV>
+                        <DIV class="number_rooms">
+                            <DIV class="ilog"></DIV>
+                            2 Bedroom
+                        </DIV>
+                        <DIV class="number_bathrooms">
+                            <DIV class="ilog"></DIV>
+                            1 Bathroom
+                        </DIV>
+                    </DIV>
+                    <DIV class="user">
+                        <STRONG>Owner:</STRONG>  Adrienne
+                    </DIV>
+                    <DIV class="description">
+                        Microsoft Word est un logiciel de traitement de texte publié par 
+                        Microsoft. La version la plus récente est Word 2021. Sa première 
+                        version a été distribuée en 1983 sous le nom de Multi-Tool Word 
+                        pour le système d'exploitation Xenix qui était une version du 
+                        système Unix à la fin des années 1970
+                    </DIV>
+                </ARTICLE>
+                <ARTICLE>
+                    <H2>A suite</H2>
+                    <DIV class="price_by_night">&#36;190</DIV>
+                    <DIV class="information">
+                        <DIV class="max_guest">
+                            <DIV class="ilog"></DIV>
+                            6 Guests
+                        </DIV>
+                        <DIV class="number_rooms">
+                            <DIV class="ilog"></DIV>
+                            3 Bedroom
+                        </DIV>
+                        <DIV class="number_bathrooms">
+                            <DIV class="ilog"></DIV>
+                            2 Bathroom
+                        </DIV>
+                    </DIV>
+                    <DIV class="user">
+                        <STRONG>Owner:</STRONG>  Bill Zuckerburg
+                    </DIV>
+                    <DIV class="description">
+                        Microsoft Word est un logiciel de traitement de texte publié par 
+                        Microsoft. La version la plus récente est Word 2021. Sa première 
+                        version a été distribuée
+                    </DIV>
+                </ARTICLE>
+            </SECTION>
+        </DIV>
+        <FOOTER>
+            Best School
+        </FOOTER>
+    </BODY>
+</html>
