@@ -51,21 +51,21 @@ class HBNBCommand(cmd.Cmd):
                 key, val = i.split("=")
                 flag = 0
                 if val[0] == '"':
-                val = val.strip('"')
-                val = val.replace("\\", "")
-                val = val.replace("_", " ")
-            elif "." in val:
-                try:
-                    val = float(val)
-                except Exception:
-                    flag = 1
-            else:
-                try:
-                    val = int(val)
-                except Exception:
-                    flag = 1
-            if (not flag):
-                setattr(new_instance, key, val)
+                    val = val.strip('"')
+                    val = val.replace("\\", "")
+                    val = val.replace("_", " ")
+                elif "." in val:
+                    try:
+                        val = float(val)
+                    except Exception:
+                        flag = 1
+                else:
+                    try:
+                        val = int(val)
+                    except Exception:
+                        flag = 1
+                if (not flag):
+                    setattr(new_instance, key, val)
             new_instance.save()
             print(new_instance.id)
         elif args[0] not in HBNBCommand.classes:
