@@ -4,7 +4,7 @@
         which was done during the project 0x01.
         AirBnB clone - Web static
     Copy files 3-footer.css, 3-header.css, 4-common.css
-        and 6-filters.css from web_static/styles/ 
+        and 6-filters.css from web_static/styles/
         to the folder web_flask/static/styles
     Copy files icon.png and logo.png from web_static/images/
         to the folder web_flask/static/images
@@ -23,7 +23,9 @@ from flask import Flask
 from flask import render_template
 from models import storage
 
+
 app = Flask(__name__)
+
 
 @app.route("/hbnb_filters", strict_slashes=False)
 def hbnb_filters():
@@ -32,10 +34,12 @@ def hbnb_filters():
                            states=storage.all("State"),
                            amenities=storage.all("Amenity"))
 
+
 @app.teardown_appcontext
 def teardown(exc):
     """closing"""
     storage.close()
+
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0")

@@ -5,7 +5,7 @@
     H1 tag: “States”
     UL tag: with the list of all State objects present
         in DBStorage sorted by name (A->Z) tip
-    LI tag: description of one State: 
+    LI tag: description of one State:
             <state.id>: <B><state.name></B>
     Import this 7-dump to have some data
     You must use the option strict_slashes=False
@@ -24,10 +24,12 @@ def states_list():
     render_template("7-states_list.html",
                     states=storage.all("State"))
 
+
 @app.teardown_appcontext
 def teardown(exc):
     """closing"""
     storage.close()
+
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0")

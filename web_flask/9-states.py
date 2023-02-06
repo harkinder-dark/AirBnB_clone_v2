@@ -12,7 +12,7 @@ Routes:
     H1 tag: “States”
     UL tag: with the list of all State objects present
                 in DBStorage sorted by name (A->Z) tip
-    LI tag: description of one State: 
+    LI tag: description of one State:
                 <state.id>: <B><state.name></B>
     /states/<id>: display a HTML page: (inside the tag BODY)
         If a State object is found with this id:
@@ -31,11 +31,12 @@ from models import storage
 app = Flask(__name__)
 
 
-app.route("/states", strict_slashes=False)
+@app.route("/states", strict_slashes=False)
 def states():
     """states function"""
     return render_template("9-states.html",
                            states=storage.all("State"))
+
 
 @app.route("/states/<id>", strict_slashes=False)
 def state_id(id):
@@ -45,11 +46,12 @@ def state_id(id):
             return render_template("9-states.html", states=state)
     return render_template("9-states.html")
 
+
 @app.teardown_appcontext
 def teardown(exc):
     """closing"""
     storage.close()
 
+
 if __name__ == "__main__":
     app.run(host="0.0.0.0")
-                  
