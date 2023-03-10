@@ -14,6 +14,7 @@
 from flask import Flask
 from flask import render_template
 from models import storage
+from models.state import State
 
 app = Flask(__name__)
 
@@ -22,7 +23,7 @@ app = Flask(__name__)
 def states_list():
     """states_list function"""
     render_template("7-states_list.html",
-                    states=storage.all("State"))
+                    states=storage.all(State))
 
 
 @app.teardown_appcontext

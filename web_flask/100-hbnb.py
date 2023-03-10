@@ -27,6 +27,9 @@
 from flask import Flask
 from flask import render_template
 from models import storage
+from models.state import State
+from models.amenity import Amenity
+from models.place import Place
 
 
 app = Flask(__name__)
@@ -36,9 +39,9 @@ app = Flask(__name__)
 def hbnb():
     """function hbnb"""
     return render_template("100.hbnb.html",
-                           states=storage.all("State"),
-                           amenities=storage.all("Amenity"),
-                           places=storage.all("Place"))
+                           states=storage.all(State),
+                           amenities=storage.all(Amenity),
+                           places=storage.all(Place))
 
 
 @app.teardown_appcontext

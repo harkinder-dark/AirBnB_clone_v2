@@ -1,12 +1,5 @@
 #!/usr/bin/python3
-"""To load all cities of a State:
-        If your storage engine is DBStorage,
-            you must use cities relationship
-        Otherwise, use the public getter method cities
-        After each request you must remove the current
-            SQLAlchemy Session:
-        Declare a method to handle @app.teardown_appcontext
-        Call in this method storage.close()
+"""
 Routes:
     /states: display a HTML page: (inside the tag BODY)
     H1 tag: “States”
@@ -26,6 +19,7 @@ Routes:
 """
 from flask import Flask
 from flask import render_template
+from models.state import State
 from models import storage
 
 app = Flask(__name__)
@@ -35,13 +29,13 @@ app = Flask(__name__)
 def states():
     """states function"""
     return render_template("9-states.html",
-                           states=storage.all("State"))
+                           states=storage.all(State))
 
 
 @app.route("/states/<id>", strict_slashes=False)
 def state_id(id):
     """states for id"""
-    for state in storage.all("State").values():
+    for state in storage.all(State).values():
         if state.id == id:
             return render_template("9-states.html", states=state)
     return render_template("9-states.html")

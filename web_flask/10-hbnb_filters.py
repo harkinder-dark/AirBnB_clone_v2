@@ -22,6 +22,8 @@
 from flask import Flask
 from flask import render_template
 from models import storage
+from models.state import State
+from models.amenity import Amenity
 
 
 app = Flask(__name__)
@@ -31,8 +33,8 @@ app = Flask(__name__)
 def hbnb_filters():
     """hbnb filters function"""
     return render_template('6-index.html',
-                           states=storage.all("State"),
-                           amenities=storage.all("Amenity"))
+                           states=storage.all(State),
+                           amenities=storage.all(Amenity))
 
 
 @app.teardown_appcontext

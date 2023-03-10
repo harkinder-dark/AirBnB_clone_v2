@@ -24,6 +24,7 @@ Routes:
 from flask import Flask
 from flask import render_template
 from models import storage
+from models.state import State
 
 app = Flask(__name__)
 
@@ -32,7 +33,7 @@ app = Flask(__name__)
 def cities_by_states():
     """cities by states function"""
     return render_template("8-cities_by_states.html",
-                           states=storage.all("State"))
+                           states=storage.all(State))
 
 
 @app.teardown_appcontext
